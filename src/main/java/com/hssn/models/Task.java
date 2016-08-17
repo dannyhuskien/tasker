@@ -16,6 +16,7 @@ public class Task {
     private Date UpdatedAt;
 
     public Task() {
+        this.IsComplete = false;
         this.CreatedAt = new Date();
         this.UpdatedAt = new Date();
     }
