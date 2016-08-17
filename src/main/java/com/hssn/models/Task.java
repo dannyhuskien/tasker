@@ -1,13 +1,16 @@
 package com.hssn.models;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table( name = "tasks")
 public class Task {
 
     private int id;
     private String name;
     private String category;
-    private Date Due;
+    private Date due;
     private Date CreatedAt;
     private boolean IsComplete;
     private Date UpdatedAt;
@@ -17,6 +20,7 @@ public class Task {
         this.UpdatedAt = new Date();
     }
 
+    @Column(name="is_complete", columnDefinition = "BIT", length = 1)
     public boolean getIsComplete() {
         return IsComplete;
     }
@@ -25,6 +29,8 @@ public class Task {
         IsComplete = complete;
     }
 
+    @Id
+    @GeneratedValue
     public int getId() {
 
         return id;
@@ -50,14 +56,17 @@ public class Task {
         this.category = category;
     }
 
+    @Temporal(TemporalType.DATE)
     public Date getDue() {
-        return Due;
+        return due;
     }
 
     public void setDue(Date due) {
-        Due = due;
+        this.due = due;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="created_at", insertable = true, updatable = false)
     public Date getCreatedAt() {
         return CreatedAt;
     }
@@ -66,6 +75,8 @@ public class Task {
         CreatedAt = createdAt;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="updated_at")
     public Date getUpdatedAt() {
         return UpdatedAt;
     }
@@ -74,6 +85,7 @@ public class Task {
         UpdatedAt = updatedAt;
     }
 
+    @PreUpdate
     protected void updateTime()
     {
         this.setUpdatedAt(new Date());
